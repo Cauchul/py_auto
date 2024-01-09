@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<server_mgr_cfg version="1"> 
+  <common> 
+    <pkcs12 pkcs12Path=".\PFS.p12" rootCertPath=".\DingLiCA.pem"/>  
+    <redis host="127.0.0.1" port="6379" key=""/>  
+    <pg host="172.16.23.148" port="5432" user="postgres" key="AAAABtNtyRc3ZuPRbba0ITx7nH0=" dbname="postgres"/>  
+    <logger host="127.0.0.1" port="8860"/> 
+  </common>  
+  <servers> 
+    <server name="DCSTestMgr" path="D:\Auto_Test_DCS\dcs_build\bin\DCSTestMgr.exe" otherArgs="" isModule="0" testPort="-1" isAutoStart="1"/>  
+    <server name="DCSTests" path="D:\Auto_Test_DCS\dcs_build\bin\DCSTests.exe" otherArgs="" isModule="0" testPort="-1" isAutoStart="1"/>  
+    <server name="DCSPower" path="D:\Auto_Test_DCS\dcs_build\bin\power_server.exe" otherArgs="" isModule="1" testPort="-1" isAutoStart="1"/>  
+    <server name="DCSSystemMgr" path="D:\Auto_Test_DCS\dcs_build\bin\DCSSystemMgr.exe" otherArgs="" isModule="0" testPort="-1" isAutoStart="1"/>  
+    <server name="DCSSoundMgr" path="D:\Auto_Test_DCS\dcs_build\bin\DCSSoundMgr.exe" otherArgs="" isModule="0" testPort="-1" isAutoStart="1"/>  
+    <server name="DCSMos" path="D:\Auto_Test_DCS\dcs_build\bin\DCSMos.exe" otherArgs="" isModule="0" testPort="-1" isAutoStart="1"/>  
+	
+  </servers> 
+</server_mgr_cfg>
