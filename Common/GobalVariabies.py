@@ -22,8 +22,7 @@ redis_conn = redis.Redis(host='127.0.0.1', port=6379)
 pubsub = redis_conn.pubsub()
 
 # pg 对象
-# pg_project = PostgresOperations(host='172.16.23.148')
-pg_project = PostgresOperations(host='172.16.21.65')
+pg_project = PostgresOperations(host='172.16.23.148')
 pg_project.pg_connect()
 
 # ui_service 对象
@@ -127,15 +126,13 @@ def get_can_use_module_port(device_id):
                 port = int(service_name[service_name.rfind('_'):])
                 service_status_list.append(port)
 
-        # if 'DCSDeviceServer' in service_name:
-        #     get_ip = f_redis.hget(service_name, 'module_netadopt_ipv4')
-        #     if get_ip:
-        #         port = int(service_name[service_name.rfind('_'):])
-        #         ip_status_list.append(port)
+        if 'DCSDeviceServer' in service_name:
+            get_ip = f_redis.hget(service_name, 'module_netadopt_ipv4')
+            if get_ip:
+                port = int(service_name[service_name.rfind('_'):])
+                ip_status_list.append(port)
 
-    return service_status_list
-
-    # return sorted(list(set(service_status_list) & set(ip_status_list)))
+    return sorted(list(set(service_status_list) & set(ip_status_list)))
 
 
 def generate_start_service_xml(xml_file_name, port_list):

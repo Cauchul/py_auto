@@ -423,7 +423,7 @@ class TestDCSTests:
 
             with allure.step('期望值：值不为空，实际值：{0}'.format(TestDCSTests.test_port_list)):
                 print('TestDCSTests.test_port_list: ', TestDCSTests.test_port_list)
-                # assert TestDCSTests.test_port_list
+                assert TestDCSTests.test_port_list
 
         with allure.step('连接UIService'):
             websocket_status = ui_service_project.connect()

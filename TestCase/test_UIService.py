@@ -162,12 +162,11 @@ class TestUIService:
             print('device_id: ', TestUIService.device_id)
 
             dev_hash_name = get_all_run_process(TestUIService.device_id)
-            # TestUIService.test_port_list = check_module(dev_hash_name)
-            TestUIService.test_port_list = get_can_use_module_port(TestUIService.device_id)
+            TestUIService.test_port_list = check_module(dev_hash_name)
 
-            # with allure.step('期望值：值不为空，实际值：{0}'.format(TestUIService.test_port_list)):
-            #     print('TestUIService.test_port_list: ', TestUIService.test_port_list)
-            #     assert TestUIService.test_port_list
+            with allure.step('期望值：值不为空，实际值：{0}'.format(TestUIService.test_port_list)):
+                print('TestUIService.test_port_list: ', TestUIService.test_port_list)
+                assert TestUIService.test_port_list
 
         with allure.step('连接UIService'):
             websocket_status = ui_service_project.connect()

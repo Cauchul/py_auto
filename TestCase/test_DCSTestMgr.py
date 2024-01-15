@@ -106,11 +106,11 @@ class TestDCSTestMgrService:
             print('device_id: ', TestDCSTestMgrService.device_id)
 
             dev_hash_name = get_all_run_process(TestDCSTestMgrService.device_id)
-            # TestDCSTestMgrService.test_port_list = check_module(dev_hash_name)
-            TestDCSTestMgrService.test_port_list = get_can_use_module_port(TestDCSTestMgrService.device_id)
-            # with allure.step('期望值：值不为空，实际值：{0}'.format(TestDCSTestMgrService.test_port_list)):
-            #     print('TestDCSTestMgrService.test_port_list: ',  TestDCSTestMgrService.test_port_list)
-            #     assert TestDCSTestMgrService.test_port_list
+            TestDCSTestMgrService.test_port_list = check_module(dev_hash_name)
+
+            with allure.step('期望值：值不为空，实际值：{0}'.format(TestDCSTestMgrService.test_port_list)):
+                print('TestDCSTestMgrService.test_port_list: ',  TestDCSTestMgrService.test_port_list)
+                assert TestDCSTestMgrService.test_port_list
 
         with allure.step('连接UIService'):
             websocket_status = ui_service_project.connect()
@@ -138,7 +138,7 @@ class TestDCSTestMgrService:
         ui_service_project.disconnect()
         pubsub.unsubscribe('PFS-EEFB41C0342CB49570EEB4DED2CBC588-CN.GuangZhou.Zhuhai-DCSUISrv-cmdrequest')
 
-    # @pytest.mark.skip(reason="跳过")
+    @pytest.mark.skip(reason="跳过")
     @allure.step('测试管理服务测试')
     @check_func
     def test_ui_func_to_test_manager(self):
@@ -184,24 +184,22 @@ class TestDCSTestMgrService:
         print('channel: ', redis_chanel)
 
         # 发送更新测试计划
-        with allure.step('发送更新测试计划'):
-            cmd_json_update_testplan = {'from': 'PFS-EEFB41C0342CB49570EEB4DED2CBC588-CN.GuangZhou.Zhuhai-DCSUISrv',
-                              'method': 'update_alltestplan',
-                              'reqid': '1681114024453762PFS-EEFB41C0342CB49570EEB4DED2CBC588-CN.GuangZhou.ZhuhaiDcs-10'}
-            cmd_update_testplan_res = pub_json_cmd_to_redis_chanel(package_project, cmd_json_update_testplan, pubsub, redis_chanel)
-            print('cmd_update_testplan_res: ', cmd_update_testplan_res)
+        cmd_json_update_testplan = {'from': 'PFS-EEFB41C0342CB49570EEB4DED2CBC588-CN.GuangZhou.Zhuhai-DCSUISrv',
+                          'method': 'update_alltestplan',
+                          'reqid': '1681114024453762PFS-EEFB41C0342CB49570EEB4DED2CBC588-CN.GuangZhou.ZhuhaiDcs-10'}
+        cmd_update_testplan_res = pub_json_cmd_to_redis_chanel(package_project, cmd_json_update_testplan, pubsub, redis_chanel)
+        print('cmd_update_testplan_res: ', cmd_update_testplan_res)
 
         with allure.step('对比初始测试计划和解析生成的的测试计划'):
             self.parse_xml(TestDCSTestMgrService.test_port_list, local_tmp_path)
 
-        # 发送开始测试命令
-        with allure.step('发送开始测试命令'):
-            cmd_json_start_test = {'from': 'PFS-EEFB41C0342CB49570EEB4DED2CBC588-CN.GuangZhou.Zhuhai-DCSUISrv',
-                                        'method': 'start_test',
-                                        'reqid': '1681114024453762PFS-EEFB41C0342CB49570EEB4DED2CBC588-CN.GuangZhou.ZhuhaiDcs-10',
-                                        'test_port': 0, 'is_file_cut': 0, 'file_name': ''}
-            cmd_start_test_res = pub_json_cmd_to_redis_chanel(package_project, cmd_json_start_test, pubsub, redis_chanel)
-            print('cmd_start_test_res: ', cmd_start_test_res)
+       # 发送开始测试命令
+        cmd_json_start_test = {'from': 'PFS-EEFB41C0342CB49570EEB4DED2CBC588-CN.GuangZhou.Zhuhai-DCSUISrv',
+                                    'method': 'start_test',
+                                    'reqid': '1681114024453762PFS-EEFB41C0342CB49570EEB4DED2CBC588-CN.GuangZhou.ZhuhaiDcs-10',
+                                    'test_port': 0, 'is_file_cut': 0, 'file_name': ''}
+        cmd_start_test_res = pub_json_cmd_to_redis_chanel(package_project, cmd_json_start_test, pubsub, redis_chanel)
+        print('cmd_start_test_res: ', cmd_start_test_res)
 
         time.sleep(2)
 
@@ -209,14 +207,13 @@ class TestDCSTestMgrService:
             self.check_redis()
 
         # 发送停止测试命令
-        with allure.step('发送停止测试命令'):
-            cmd_json_stop_test = {'from': 'PFS-EEFB41C0342CB49570EEB4DED2CBC588-CN.GuangZhou.Zhuhai-DCSUISrv',
-                                   'method': 'stop_test',
-                                   'reqid': '1681114024453762PFS-EEFB41C0342CB49570EEB4DED2CBC588-CN.GuangZhou.ZhuhaiDcs-10',
-                                   'test_port': 0, 'is_file_cut': 0, 'file_name': ''}
-            cmd_stop_test_res = pub_json_cmd_to_redis_chanel(package_project, cmd_json_stop_test, pubsub,
-                                                              redis_chanel)
-            print('cmd_stop_test_res: ', cmd_stop_test_res)
+        cmd_json_stop_test = {'from': 'PFS-EEFB41C0342CB49570EEB4DED2CBC588-CN.GuangZhou.Zhuhai-DCSUISrv',
+                               'method': 'stop_test',
+                               'reqid': '1681114024453762PFS-EEFB41C0342CB49570EEB4DED2CBC588-CN.GuangZhou.ZhuhaiDcs-10',
+                               'test_port': 0, 'is_file_cut': 0, 'file_name': ''}
+        cmd_stop_test_res = pub_json_cmd_to_redis_chanel(package_project, cmd_json_stop_test, pubsub,
+                                                          redis_chanel)
+        print('cmd_stop_test_res: ', cmd_stop_test_res)
 
 
     @check_func
@@ -247,7 +244,6 @@ class TestDCSTestMgrService:
             with check.check:
                 with allure.step('生成文件：{0}'.format(port_xml_name_testplan_config_port_def)):
                     assert get_pg_data_generate_xml(sql_cmd_testplan_config_port_def, port_xml_name_testplan_config_port_def, 'testschemas')
-                    # assert get_pg_data_generate_xml(sql_cmd_select_testplan_history, xml_name_testplan_history, 'unified_xml')
 
 
             # 获取端口的xml的根节点

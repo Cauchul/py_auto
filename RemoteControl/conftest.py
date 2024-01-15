@@ -197,8 +197,6 @@ def ta_prepare_test():
                 start_service(exe_path, config_xml_path)
                 time.sleep(3)
             with allure.step('检测DCS相关服务的进程状态'):
-                time.sleep(20)
-                print('等待 20s 检测服务状态......')
                 check_process_exist_or_not(process_name_list)
                 # print('等待 20s 检测服务状态......')
                 # time.sleep(20)

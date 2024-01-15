@@ -63,15 +63,15 @@ class TestDCSSystemMgr:
                 print('cur_disk_usage: ', psutil.disk_usage(drive).percent)
                 i = i + 1
 
-        with allure.step('等待 600s，磁盘使用超过85%，等待系统管理每分钟巡查、清理dump文件'):
+        with allure.step('等待 60s，磁盘使用超过85%，等待系统管理每分钟巡查、清理dump文件'):
             print('sleep 600s 等待，系统管理清理多余文件')
             time.sleep(600)
         # 检查文件是否存在
-        # with allure.step('系统管理服务，清理完毕后后，检测断言文件'):
-        #     with allure.step('测试文件 {0} 是否删除，期望值：True，实际值：{1}'.format(old_time_des_file, not os.path.exists(old_time_des_file))):
-        #         assert not os.path.exists(old_time_des_file)
-        #     with allure.step('测试文件 {0} 是否存在，期望值：True，实际值：{1}'.format(new_time_des_file, os.path.exists(new_time_des_file))):
-        #         assert os.path.exists(new_time_des_file)
+        with allure.step('系统管理服务，清理完毕后后，检测断言文件'):
+            with allure.step('测试文件 {0} 是否删除，期望值：True，实际值：{1}'.format(old_time_des_file, not os.path.exists(old_time_des_file))):
+                assert not os.path.exists(old_time_des_file)
+            with allure.step('测试文件 {0} 是否存在，期望值：True，实际值：{1}'.format(new_time_des_file, os.path.exists(new_time_des_file))):
+                assert os.path.exists(new_time_des_file)
 
         # 清理加压文件
         for root, dirs, files in os.walk(dump_path):
@@ -123,8 +123,6 @@ class TestDCSSystemMgr:
                     print('source_file_de_res_data: ', res_data[6])
                     print('type last_month: ', type(last_month))
                     assert res_data[6] >= last_month
-                    assert res_data[6] >= last_month
-                    assert res_data[6] >= last_month
 
         with allure.step('检查数据库， device_event_def 表'):
             pg_select_cmd = 'SELECT * FROM "public"."device_event_def" ORDER BY "device_event_def"."record_datetime" LIMIT 1'
@@ -136,7 +134,7 @@ class TestDCSSystemMgr:
                                                                                             res_data[11])):
                     print('device_event_def_res_data: ', res_data[11])
                     print('type last_day: ', type(last_day))
-                    assert res_data[11] <= last_day
+                    assert res_data[11] >= last_day
 
         with allure.step('检查数据库， process_info_def 表'):
             pg_select_cmd = 'SELECT * FROM "public"."process_info_def" ORDER BY "process_info_def"."create_time" LIMIT 1'
@@ -148,7 +146,7 @@ class TestDCSSystemMgr:
                                                                                               res_data[7])):
                     print('process_info_def_res_data: ', res_data[7])
                     print('type last_day: ', type(last_day))
-                    assert res_data[7] <= last_day
+                    assert res_data[7] >= last_day
 
         with allure.step('检查数据库， system_info_def 表'):
             pg_select_cmd = 'SELECT * FROM "public"."system_info_def" ORDER BY "system_info_def"."create_time" LIMIT 1'
@@ -158,7 +156,7 @@ class TestDCSSystemMgr:
                         'system_info_def 只保留一天内的数据，当前时间：{0}，界限时间： {1}，读取的最远的时间：{2}'.format(cur_start_test_time, last_day,
                                                                                              res_data[5])):
                     print('res_data: ', res_data[5])
-                    assert res_data[5] <= last_day
+                    assert res_data[5] >= last_day
 
         with allure.step('检查数据库， disk_info_def 表'):
             pg_select_cmd = 'SELECT * FROM "public"."disk_info_def" ORDER BY "disk_info_def"."create_time" LIMIT 1'
@@ -168,7 +166,7 @@ class TestDCSSystemMgr:
                         'disk_info_def 只保留一天内的数据，当前时间：{0}，界限时间： {1}，读取的最远的时间：{2}'.format(cur_start_test_time, last_day,
                                                                                            res_data[5])):
                     print('res_data: ', res_data[5])
-                    assert res_data[5] <= last_day
+                    assert res_data[5] >= last_day
 
     @allure.step('进程监控测试')
     def test_process_monitor(self):

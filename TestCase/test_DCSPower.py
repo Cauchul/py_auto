@@ -180,8 +180,8 @@ class TestDCSPower:
             if not port_list:
                 with check.check:
                     with allure.step('当前可用端口为：{0}'.format(port_list)):
-                        # assert port_list
-                        print('test_list: ', port_list)
+                        assert port_list
+            print('test_list: ', port_list)
 
         with allure.step('从pg数据库中获取当前支持模块的所有pid list和vid list'):
             TestDCSPower.pid_list, TestDCSPower.vid_list = get_pid_vid_from_pg()

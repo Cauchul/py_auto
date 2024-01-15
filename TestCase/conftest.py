@@ -253,7 +253,7 @@ def prepare_test():
             with allure.step('检测DCS相关服务的进程状态'):
                 check_process_exist_or_not(process_name_list)
                 print('等待 20s 检测服务状态......')
-                time.sleep(30)
+                time.sleep(20)
                 check_process_status()
             with allure.step('启动UIService'):
                 print('启动UIService')
